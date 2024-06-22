@@ -1,0 +1,77 @@
+// 修正后的 SCSS 代码
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  line-height: 1.5;
+  outline: none;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@font-face {
+  font-family: 'moe';
+  src: url('~@/static/font/moe.ttf') format('truetype'); // 注意这里的路径可能需要根据你的项目配置进行调整
+}
+
+body {
+  font-family: 'moe';
+  overflow-x: hidden;
+  width: 100vw;
+  height: 100vh;
+  cursor: url('~@/static/Arrow.cur'), auto !important; // 注意这里的路径可能需要根据你的项目配置进行调整
+}
+
+
+
+
+/**
+
+--蓝色背景色主题
+--深背景色对应css变量名称: --xiaofan-bg-main-color
+--浅背景色对应css变量名称: --xiaofan-bg-unimportant-color
+--深文字颜色对应css变量名称: --xiaofan-bg-main-color-text
+--浅文字颜色对应css变量名称: --xiaofan-bg-unimportant-color-text
+深背景色: #0593f9
+浅背景色: #ecf5ff
+--花火红色背景色主题
+深背景色: #e64340
+浅背景色: #ffc2c1
+
+*/
+
+
+:root {
+  // 变量定义
+  --xiaofan-bg-main-color: #0593f9;  // 背景主色深色
+
+  --xiaofan-bg-main-color-hover: #0f7fec;
+  --xiaofan-bg-main-color-active: #0f7fec;
+  --xiaofan-bg-main-color-disabled: #9d9d9d;
+
+  --xiaofan-bg-main-color-text: #0593f9;
+
+  --xiaofan-bg-unimportant-color: #ecf5ff;
+
+  --xiaofan-bg-unimportant-color-text: #dededede;
+
+  --xiaofan-remind-color-text: #979797de;
+
+  --xiaofan-bg-default-color-text: #ffffff;
+}
+
+
+.uni-checkbox-input{
+  border: 1px solid var(--xiaofan-bg-main-color)!important;
+  border-radius: 25px!important;
+}
+
+.uni-searchbar__box{
+  border-radius: 25px!important;
+}
+
+
