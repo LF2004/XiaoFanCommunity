@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import Home from "@/pages/index/components/Home.vue";
+
 import Job from "@/pages/index/components/Job.vue";
+
 import Information from "@/pages/index/components/Information.vue";
+
+import IndexSkeleton from "@/components/skeleton/IndexSkeleton.vue"; // 导入首页骨架屏
+
+import {onLoad} from "@dcloudio/uni-app";
+
 // 获取屏幕边界到安全区域距离
 const {safeAreaInsets} = uni.getSystemInfoSync()
 
@@ -17,9 +24,24 @@ const orderTabs = ref([
 // 高亮下标
 const activeIndex = ref(0)
 
+const isShowSkeleton = ref(false)
+
+onLoad(async () =>{
+  isShowSkeleton.value = true
+  await Promise.all([
+    // getHomeBannerData(),
+    // getHomeCategoryMutliData(),
+    // getHomeHotMutil(),
+  ])
+  setTimeout(() => {
+    isShowSkeleton.value = false
+  },3000)
+})
+
 </script>
 
 <template>
+  <IndexSkeleton v-if="isShowSkeleton"/>
   <div class="index-header" :style="{'margin-top': safeAreaInsets.top + 'px'}">
    <navigator url="/pages/login/login">
      <div class="index-header-my-avatar">
@@ -53,7 +75,7 @@ const activeIndex = ref(0)
       <!-- 滑动项 -->
       <swiper-item v-for="item,index in orderTabs" :key="item.title">
         <scroll-view scroll-y class="home">
-          <component :is="item.component"  v-if="index === activeIndex">></component>
+          <component :is="item.component"  v-if="index === activeIndex"></component>
         </scroll-view>
       </swiper-item>
     </swiper>
