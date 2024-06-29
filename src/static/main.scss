@@ -37,11 +37,13 @@ body {
 --深文字颜色对应css变量名称: --xiaofan-bg-main-color-text
 --浅文字颜色对应css变量名称: --xiaofan-bg-unimportant-color-text
 深背景色: #0593f9
-浅背景色: #ecf5ff
+浅背景色: #b2d0f2
 --花火红色背景色主题
 深背景色: #e64340
 浅背景色: #ffc2c1
-
+--樱花粉背景主题
+深背景色: #ff95b7
+浅背景色: #f5cddd
 */
 
 
@@ -53,9 +55,16 @@ body {
   --xiaofan-bg-main-color-active: #0f7fec;
   --xiaofan-bg-main-color-disabled: #9d9d9d;
 
+  --xiaofan-tabbar-color-selected: #0593f9;
+
+  --xiaofan-tabbar-color-unselected: #ffc2c1;
+
   --xiaofan-bg-main-color-text: #0593f9;
 
-  --xiaofan-bg-unimportant-color: #ecf5ff;
+  --xiaofan-bg-unimportant-color: #bed5ef;
+
+  --xiaofan-job-default-color-text: #A6A8AD;
+
 
   --xiaofan-bg-unimportant-color-text: #dededede;
 

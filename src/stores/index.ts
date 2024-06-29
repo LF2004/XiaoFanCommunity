@@ -11,3 +11,4 @@ export default pinia
 
 export * from './modules/userInfo';
 export * from './modules/userLoginManner';
+export * from './modules/AccentColor';

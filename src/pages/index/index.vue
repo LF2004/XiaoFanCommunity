@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import {onShow} from "@dcloudio/uni-app";
 import Home from "@/pages/index/components/Home.vue";
 import Job from "@/pages/index/components/Job.vue";
 import Information from "@/pages/index/components/Information.vue";
@@ -21,7 +20,7 @@ const activeIndex = ref(0)
 </script>
 
 <template>
-  <div class="index-header">
+  <div class="index-header" :style="{'margin-top': safeAreaInsets.top + 'px'}">
    <navigator url="/pages/login/login">
      <div class="index-header-my-avatar">
        <span class="iconfont" style="color:#dddddd;font-size: 28px;margin-left: -2px">&#xe62c;</span>
@@ -52,17 +51,18 @@ const activeIndex = ref(0)
         @change="activeIndex = $event.detail.current"
     >
       <!-- 滑动项 -->
-      <swiper-item v-for="item in orderTabs" :key="item.title">
+      <swiper-item v-for="item,index in orderTabs" :key="item.title">
         <scroll-view scroll-y class="home">
-          <component :is="item.component"></component>
+          <component :is="item.component"  v-if="index === activeIndex">></component>
         </scroll-view>
       </swiper-item>
     </swiper>
   </view>
+  <FanTabBar :slectTab="activeIndex"/>
 </template>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .index-header {
   display: flex;

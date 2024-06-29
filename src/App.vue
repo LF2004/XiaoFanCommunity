@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
+import {useThemeColor} from "@/hooks/changThemeColor";
+import {onMounted} from "vue";
 onLaunch(() => {
   console.log("App Launch");
 });
 onShow(() => {
-  console.log("App Show");
+
 });
+onMounted(() => {
+  useThemeColor()
+})
 onHide(() => {
   console.log("App Hide");
 });
