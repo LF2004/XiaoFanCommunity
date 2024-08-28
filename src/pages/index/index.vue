@@ -9,78 +9,122 @@ import Information from "@/pages/index/components/Information.vue";
 import IndexSkeleton from "@/components/skeleton/IndexSkeleton.vue"; // 导入首页骨架屏
 
 import {onLoad} from "@dcloudio/uni-app";
+import { userThemeColorValStore } from "@/stores";
+const userThemeColorVal = userThemeColorValStore()
 
 // 获取屏幕边界到安全区域距离
 const {safeAreaInsets} = uni.getSystemInfoSync()
+import {userMannerInfoStore, chanePlateIndexStore} from "@/stores"
 
-
+const userInfoMannerStatusStore = userMannerInfoStore()
+const userChanePlateIndexStore = chanePlateIndexStore()
 // tabs 数据
 const orderTabs = ref([
   {hometate: 0, title: '首页', component: Home},
   {hometate: 1, title: '求职', component: Job},
-  {hometate: 2, title: '官方消息',component: Information},
+  {hometate: 2, title: '官方消息', component: Information},
 ])
 
 // 高亮下标
 const activeIndex = ref(0)
 
+const changePlate = (index: number) => {
+  activeIndex.value = index
+  userChanePlateIndexStore.setPlateIndex({
+    plateIndex: index,
+    plateIndexName: orderTabs.value[index].title
+  })
+}
+
 const isShowSkeleton = ref(false)
 
-onLoad(async () =>{
+const addBenDiTotaos = () => {
+	uni.createPushMessage({
+		title:'有新朋友给你发信息了快来看看',
+		content:'你好',
+		sound:'system',
+		icon:'/static/image/logo.png',
+		success:(res) => {
+			console.log(res);
+		}
+	})
+}
+
+const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color'];
+const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
+const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];
+
+onLoad(async () => {
+  uni.setStorageSync('selectPageIndex', {
+    plateIndex: 0,
+    pageUrl: "/pages/index/index"
+  })
   isShowSkeleton.value = true
   await Promise.all([
     // getHomeBannerData(),
     // getHomeCategoryMutliData(),
     // getHomeHotMutil(),
-  ])
-  setTimeout(() => {
-    isShowSkeleton.value = false
-  },3000)
+  ]).then(() => {
+    setTimeout(() => {
+      isShowSkeleton.value = false
+    }, 500)
+  })
 })
 
 </script>
 
 <template>
   <IndexSkeleton v-if="isShowSkeleton"/>
-  <div class="index-header" :style="{'margin-top': safeAreaInsets.top + 'px'}">
-   <navigator url="/pages/login/login">
-     <div class="index-header-my-avatar">
-       <span class="iconfont" style="color:#dddddd;font-size: 28px;margin-left: -2px">&#xe62c;</span>
-     </div>
-   </navigator>
-    <uni-search-bar placeholder="搜索帖子" class="search-post" cancelText=" "></uni-search-bar>
-    <div class="index-header-my-avatar">
-      <span class="iconfont" style="color:#000;font-size: 24px;margin-left: -2px">&#xe61c;</span>
+  <div class="warrper" :style="{'margin-top': safeAreaInsets.top + 'px'}">
+	  <button @click="addBenDiTotaos">创建本地通知</button>
+    <div class="index-header" >
+      <navigator url="/pages/login/login">
+        <div class="index-header-my-avatar">
+          <image class="user-avarat" :src="userInfoMannerStatusStore?.UserInfoManner.avatar"
+                 v-if="userInfoMannerStatusStore?.UserInfoManner"/>
+          <span class="iconfont" style="color:#dddddd;font-size: 28px;margin-left: -2px" v-else>&#xe62c;</span>
+          <span v-if="userInfoMannerStatusStore?.UserInfoManner"
+                style="display: block">{{ userInfoMannerStatusStore?.UserInfoManner.nickName }}</span>
+        </div>
+      </navigator>
+      <navigator url="/pages/search/index" class="search-post" >
+        <uni-search-bar placeholder="搜索帖子" cancelText=" "></uni-search-bar>
+      </navigator>
+      <navigator url="/pages/message/index" class="message-post">
+      <div class="index-header-my-avatar">
+        <span class="iconfont" style="color:#000;font-size: 24px;margin-left: -2px">&#xe61c;</span>
+      </div>
+      </navigator>
     </div>
-  </div>
-  <view class="classify-tab">
-    <!-- tabs -->
-    <view class="tabs">
-      <text
-          class="item"
-          v-for="(item, index) in orderTabs"
-          :key="item.title"
-          @tap="activeIndex = index"
-          :class="activeIndex === index ? 'tabs-select' : 'item'"
+    <view class="classify-tab">
+      <!-- tabs -->
+      <view class="tabs">
+        <text
+            class="item"
+            v-for="(item, index) in orderTabs"
+            :key="item.title"
+            @tap="changePlate(index)"
+            :class="activeIndex === index ? 'tabs-select' : 'item'"
+        >
+          {{ item.title }}
+        </text>
+      </view>
+      <!-- 滑动容器 -->
+      <swiper
+          class="swiper"
+          :current="activeIndex"
+          @change="activeIndex = $event.detail.current"
       >
-        {{ item.title }}
-      </text>
+        <!-- 滑动项 -->
+        <swiper-item v-for="item,index in orderTabs" :key="item.title">
+          <scroll-view scroll-y class="home">
+            <component :is="item.component" v-if="index === activeIndex"></component>
+          </scroll-view>
+        </swiper-item>
+      </swiper>
     </view>
-    <!-- 滑动容器 -->
-    <swiper
-        class="swiper"
-        :current="activeIndex"
-        @change="activeIndex = $event.detail.current"
-    >
-      <!-- 滑动项 -->
-      <swiper-item v-for="item,index in orderTabs" :key="item.title">
-        <scroll-view scroll-y class="home">
-          <component :is="item.component"  v-if="index === activeIndex"></component>
-        </scroll-view>
-      </swiper-item>
-    </swiper>
-  </view>
-  <FanTabBar :slectTab="activeIndex"/>
+    <FanTabBar :slectTab="activeIndex"/>
+  </div>
 </template>
 
 
@@ -93,15 +137,20 @@ onLoad(async () =>{
   width: 90%;
   margin: 0 auto;
 
+  .user-avarat {
+    width: 28px;
+    height: 28px;
+  }
+
   .search-post {
     width: 80%;
   }
 }
 
 .tabs-select {
-  color: var(--xiaofan-bg-main-color-text) !important;
+  color: v-bind(ThemeMainTextColorVal) !important;
   font-weight: bold;
-  border-bottom: 3px solid var(--xiaofan-bg-main-color);
+  border-bottom: 3px solid v-bind(ThemeMainBgColorVal);
 }
 
 page {

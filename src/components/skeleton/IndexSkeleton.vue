@@ -1,36 +1,37 @@
 <template>
-  <div class="index-header" :style="{'margin-top': safeAreaInsets.top + 'px'}">
-    <div class="index-header-my-avatar"></div>
-    <input type="text" class="search-post"/>
-    <div class="index-header-my-avatar">
+  <div style="margin-top: 30px">
+    <div class="index-header" :style="{'margin-top': safeAreaInsets.top + 'px'}">
+      <div class="index-header-my-avatar"></div>
+      <input type="text" class="search-post"/>
+      <div class="index-header-my-avatar">
+      </div>
     </div>
-  </div>
-  <view class="classify-tab">
-    <!-- tabs -->
-    <view class="tabs"></view>
-    <!-- 滑动容器 -->
-    <div class="swiper ">
-      <!-- 滑动项 -->
-      <swiper-item>
-        <scroll-view scroll-y class="home">
-          <div class="home-container">
-            <div class="home-swiper">
-            </div>
-            <div class="announcement"></div>
-            <scroll-view class="scroll-view" style="height: 140%" scroll-y="true" scroll-with-animation="true">
-              <div class="invitation-card-list">
-                <div class="invitation-card-list-item" hover-class="none"
-                     v-for="item,index in 5">
-                  <div class="user-info">
-                    <div class="user-avarat"></div>
-                    <div class="user-info-text">
-                      <div class="user-name"><span class="user-level"></span></div>
-                      <div class="user-desc-item"></div>
+    <view class="classify-tab">
+      <!-- tabs -->
+      <view class="tabs"></view>
+      <!-- 滑动容器 -->
+      <div class="swiper ">
+        <!-- 滑动项 -->
+        <swiper-item>
+          <scroll-view scroll-y class="home">
+            <div class="home-container">
+              <div class="home-swiper">
+              </div>
+              <div class="announcement"></div>
+              <scroll-view class="scroll-view" style="height: 140%" scroll-y="true" scroll-with-animation="true">
+                <div class="invitation-card-list">
+                  <div class="invitation-card-list-item" hover-class="none"
+                       v-for="item,index in 5">
+                    <div class="user-info">
+                      <div class="user-avarat"></div>
+                      <div class="user-info-text">
+                        <div class="user-name"><span class="user-level"></span></div>
+                        <div class="user-desc-item"></div>
+                      </div>
+
                     </div>
 
-                  </div>
-
-                  <div class="invitation-card-content">
+                    <div class="invitation-card-content">
                       <div class="invitation-card-content-header">
                         <div class="invitation-card-content-title"></div>
                         <div class="invitation-card-content-tag"></div>
@@ -44,21 +45,22 @@
                         <div class="Illustrated-img"></div>
                       </div>
 
-                    <div class="invitation-type">
-                      <div class="invitation-type-item"></div>
-                      <div class="invitation-type-item"></div>
-                      <div class="invitation-type-item"></div>
+                      <div class="invitation-type">
+                        <div class="invitation-type-item"></div>
+                        <div class="invitation-type-item"></div>
+                        <div class="invitation-type-item"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </scroll-view>
+              </scroll-view>
 
-          </div>
-        </scroll-view>
-      </swiper-item>
-    </div>
-  </view>
+            </div>
+          </scroll-view>
+        </swiper-item>
+      </div>
+    </view>
+  </div>
 </template>
 
 <script setup lang="ts">

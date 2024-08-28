@@ -5,7 +5,7 @@
       <text class="title">{{ title }}</text>
     </view>
 
-    <count-to :startVal="0" :endVal="3000.22" :decimals="2" :duration="3000"></count-to>
+<!--    <count-to :startVal="0" :endVal="3000.22" :decimals="2" :duration="3000"></count-to>-->
     <uni-section title="基础卡片" type="line">
       <uni-card :is-shadow="false">
         <text class="uni-body">这是一个基础卡片示例，内容较少，此示例展示了一个没有任何属性不带阴影的卡片。</text>
@@ -24,13 +24,13 @@
     </div>
 
     <button @click="like(),likeStatus = !likeStatus">点赞动画</button>
+    <button @click="closeDingTime">关闭定时器</button>
   </view>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
 
-import { CountTo } from 'vue3-count-to';
 
 import {userMannerInfoStore} from '@/stores'
 
@@ -44,11 +44,15 @@ const likeOldNum = ref(likeNewNum.value +1)
 const likeStatus = ref(false)
 
 const like = () => {
-  if (likeStatus.value) {
-    likeNewNum.value++
-  } else {
-    likeNewNum.value--
-  }
+  // if (likeStatus.value) {
+  //   likeNewNum.value++
+  // } else {
+  //   likeNewNum.value--
+  // }
+  likeNewNum.value++
+  likeOldNum.value = likeNewNum.value
+
+  // 获取最新点赞数
 }
 
 const saveUserToken = () => {
@@ -57,6 +61,14 @@ const saveUserToken = () => {
     userName: 'test',
     userToken: 'test'
   })
+}
+const intervalId = ref();
+intervalId.value = setInterval(async () => {
+  console.log('11')
+},1000)
+
+const closeDingTime = () => {
+  clearInterval(intervalId.value)
 }
 </script>
 

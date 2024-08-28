@@ -2,13 +2,16 @@
 	"easycom": {
 		"autoscan": true,
 		"custom": {
-			// uni-ui 规则如下配置
 			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
-			// 以 Fan 开头的组件，在 components 目录中查找
 			"^Fan(.*)": "@/components/Fan$1.vue"
 		}
 	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [{
+			"path": "pages/start/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -22,25 +25,49 @@
 			}
 		},
 		{
+			"path": "pages/message/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/my/my",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/postdetails/postdetails", // 帖子详情
+			"path": "pages/postdetails/postdetails",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/postdetails/topicdetails", // 话题详情
+			"path": "pages/postdetails/topicdetails",
 			"style": {
 				"navigationStyle": "custom",
-			},
-			"app-plus": {
-				"animationType": "fade-in",
-				"animationDuration": 50
+				"app-plus": {
+					"animationType": "fade-in",
+					"animationDuration": 50
+				}
+			}
+		},
+		{
+			"path": "pages/search/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/testPages/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/alipayLogin/index",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		}
 	],
@@ -48,16 +75,61 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "小帆社区",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"titleView": false,
+		"animationType": "fade-in",
+		"animationDuration": 50,
+		// 将回弹属性关掉
+		"bounce": "none",
+		"scrollIndicator": "none"
 	},
-	"condition" : { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式(list 的索引项)
-		"list": [
+	"condition": {
+		"current": 0,
+		"list": [{
+			"name": "",
+			"path": "",
+			"query": ""
+		}]
+	},
+	"subPackages": [{
+		"root": "pagesUserInfo",
+		"pages": [{
+				"path": "settings",
+				"style": {
+					"navigationBarTitleText": "设置"
+				}
+			},
 			{
-				"name": "", //模式名称
-				"path": "", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到
+				"path": "profile",
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white",
+					"navigationBarTitleText": "个人信息页"
+				}
+			},
+			{
+				"path": "color",
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white",
+					"navigationBarTitleText": "主题色修改"
+				}
+			},
+			{
+				"path": "avatar",
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTitleText": "头像修改"
+				}
 			}
-		]
-	}
+		],
+		"preloadRule": {
+			"pages/my/my": {
+				"network": "all",
+				"packages": [
+					"pagesUserInfo"
+				]
+			}
+		}
+	}]
 }

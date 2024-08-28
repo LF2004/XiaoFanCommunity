@@ -23,10 +23,18 @@ body {
   overflow-x: hidden;
   width: 100vw;
   height: 100vh;
+
   cursor: url('~@/static/Arrow.cur'), auto !important; // 注意这里的路径可能需要根据你的项目配置进行调整
 }
 
-
+/*定义滚动条高宽及背景
+ 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar
+{
+  width:0;
+  height: 0;
+  background-color:rgba(255,255,255,.1);
+}
 
 
 /**
@@ -53,6 +61,8 @@ body {
 
   --xiaofan-skeleton-bg:linear-gradient(90deg, #f0f2f5 25%, #e6e8eb 37%, #f0f2f5 63%);
 
+  --xiaofan-gradient-bg:linear-gradient(90deg, #004ef6, #0046dd);
+
   --xiaofan-bg-main-color-hover: #0f7fec;
   --xiaofan-bg-main-color-active: #0f7fec;
   --xiaofan-bg-main-color-disabled: #9d9d9d;
@@ -73,13 +83,11 @@ body {
   --xiaofan-remind-color-text: #979797de;
 
   --xiaofan-bg-default-color-text: #ffffff;
+
 }
 
 
-.uni-checkbox-input{
-  border: 1px solid var(--xiaofan-bg-main-color)!important;
-  border-radius: 25px!important;
-}
+
 
 .uni-searchbar__box{
   border-radius: 25px!important;

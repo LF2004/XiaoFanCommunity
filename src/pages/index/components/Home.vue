@@ -7,21 +7,21 @@
       <swiper :autoplay="true" style="height: 100%" :interval="3000" :duration="1000"
               @change="updateCurrenSwiperIndex">
         <swiper-item v-for="(item,index) in swiperList" :key="index">
-          <img :src="item.imgUrl" class="swiper-img">
+          <image :src="item.imgUrl" class="swiper-img" />
         </swiper-item>
       </swiper>
     </div>
 
     <div class="announcement">
       <uni-notice-bar :speed="120" :background-color="mainColorVal.mainBgColor" :color="mainColorVal.mainTextColor"
-                      show-icon scrollable text="小帆社区正在建设，请关注最新动态！"/>
+                      show-icon scrollable text="小帆社区正在建设，请关注最新动态！"  style="border-radius: 10px"/>
     </div>
     <scroll-view class="scroll-view" style="height: 140%" scroll-y="true" scroll-with-animation="true">
       <div class="invitation-card-list">
         <div class="invitation-card-list-item" hover-class="none"
                    v-for="item,index in 3">
           <div class="user-info">
-            <img src="@/static/image/avatar.jpg" class="user-avarat">
+            <image src="@/static/image/avatar.jpg" class="user-avarat" />
             <div class="user-info-text">
               <div class="user-name">小帆<span class="user-level">LV1</span></div>
               <div class="user-desc-item">
@@ -45,9 +45,9 @@
               </div>
 
               <div class="Illustrated">
-                <img class="Illustrated-img" src="@/static/image/avatar.jpg">
-                <img class="Illustrated-img" src="@/static/image/avatar.jpg">
-                <img class="Illustrated-img" src="@/static/image/avatar.jpg">
+                <image class="Illustrated-img" src="@/static/image/avatar.jpg" />
+                <image class="Illustrated-img" src="@/static/image/avatar.jpg" />
+                <image class="Illustrated-img" src="@/static/image/avatar.jpg" />
               </div>
             </navigator>
 
@@ -66,25 +66,27 @@
 
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
+import { userThemeColorValStore } from "@/stores";
+const userThemeColorVal = userThemeColorValStore()
 import {onShow} from "@dcloudio/uni-app";
 
 const swiperIndex = ref(0)
 
 const swiperList = ref([
   {
-    imgUrl: './static/image/swiperImg/swiper1.png'
+    imgUrl: '/static/image/swiperImg/swiper1.png'
   },
   {
-    imgUrl: './static/image/swiperImg/swiper2.png'
+    imgUrl: '/static/image/swiperImg/swiper2.png'
   },
   {
-    imgUrl: './static/image/swiperImg/swiper2.jpg'
+    imgUrl: '/static/image/swiperImg/swiper2.jpg'
   },
   {
-    imgUrl: './static/image/swiperImg/swiper3.jpg'
+    imgUrl: '/static/image/swiperImg/swiper3.jpg'
   },
   {
-    imgUrl: './static/image/swiperImg/swiper4.png'
+    imgUrl: '/static/image/swiperImg/swiper4.png'
   }
 ])
 const mainColorVal = reactive({
@@ -96,14 +98,17 @@ const updateCurrenSwiperIndex = (e: any) => {
   swiperIndex.value = e.detail.current
 }
 
+
+const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color'];
+const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
+const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];
+
 onShow(() => {
-  const rootStyle = getComputedStyle(document.documentElement);
+  const unimportantBgColor = ThemeUnimportantBgColorVal;
 
-  const mainBgColor = rootStyle.getPropertyValue('----xiaofan-bg-unimportant-color');
+  const mainTextColor = ThemeMainTextColorVal;
 
-  const mainTextColor = rootStyle.getPropertyValue('--xiaofan-bg-main-color-text');
-
-  mainColorVal.mainBgColor = mainBgColor;
+  mainColorVal.mainBgColor = unimportantBgColor;
   mainColorVal.mainTextColor = mainTextColor;
 })
 </script>
@@ -125,7 +130,7 @@ onShow(() => {
   width: 40px;
   text-align: center;
   color: var(--xiaofan-bg-default-color-text);
-  background: var(--xiaofan-bg-main-color);
+  background: v-bind(ThemeMainBgColorVal);
   border-radius: 10px 0 10px 0;
   position: absolute;
   position: 50%;
@@ -144,8 +149,6 @@ onShow(() => {
   width: 90%;
   margin: 30px auto;
   border-radius: 10px;
-  background: var(--xiaofan-bg-unimportant-color);
-  color: var(--xiaofan-bg-main-color-text);
 
   .tz-text {
     position: absolute;
@@ -184,8 +187,8 @@ onShow(() => {
           left: 5px;
           padding: 2px;
           text-align: center;
-          border: 3px solid #16d231;
-          color: #16d231;
+          color: #fff;
+          background: #16d231;
           border-radius: 5px;
           font-size: .6rem;
         }
@@ -263,9 +266,9 @@ onShow(() => {
 
         .invitation-type-item {
           margin-left: 10px;
-          background: var(--xiaofan-bg-unimportant-color);
+          background: v-bind(ThemeUnimportantBgColorVal);
           padding: 6px;
-          color: var(--xiaofan-bg-main-color-text);
+          color: v-bind(ThemeMainTextColorVal);
           border-radius: 15px;
         }
       }

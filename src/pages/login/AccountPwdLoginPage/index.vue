@@ -42,11 +42,12 @@
 <script lang="ts" setup>
 // document.documentElement.style.setProperty('--xiaofan-bg-main-color', '#e64340');
 
-import { userLoginMannerStatus } from "@/stores"
+import {userLoginMannerStatus, userThemeColorValStore} from "@/stores"
 
 import {ref} from "vue"
 import {onShow} from "@dcloudio/uni-app";
 const userLoginMannerStatusStore = userLoginMannerStatus()
+const userThemeColorVal = userThemeColorValStore()
 
 
 const CheckboxBgColor = ref('')
@@ -74,20 +75,21 @@ const sendCode = () => {
   },1000)
 }
 
-onShow(() => {
-  const rootStyle = getComputedStyle(document.documentElement);
-
-  const mainColor = rootStyle.getPropertyValue('--xiaofan-bg-main-color');
-
-  CheckboxBgColor.value = mainColor;
-})
+const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color'];
+const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
+const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];
+const unimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
+CheckboxBgColor.value = ThemeMainBgColorVal;
 </script>
 
 <style lang="scss" scoped>
-
-.btnDisabled{
-  border: 1px solid var(--xiaofan-bg-unimportant-color-text)!important;
-  color: var(--xiaofan-bg-unimportant-color-text)!important;
+::v-deep.uni-checkbox-input{
+  border: 1px solid v-bind(ThemeMainBgColorVal) !important;
+  border-radius: 25px!important;
+}
+.btnDisabled {
+  border: 1px solid v-bind(ThemeUnimportantBgColorVal) !important;
+  color: v-bind(ThemeUnimportantBgColorVal) !important;
 }
 
 .phone-login-container{
@@ -126,8 +128,8 @@ onShow(() => {
         border-radius: 25px;
         font-size: .7rem;
         margin-left: 12%;
-        color: var(--xiaofan-bg-main-color-text);
-        border: 2px solid var(--xiaofan-bg-main-color);
+        color: v-bind(ThemeMainTextColorVal);
+        border: 2px solid v-bind(ThemeMainBgColorVal);
       }
     }
   }
@@ -146,13 +148,13 @@ onShow(() => {
       border: none;
     }
     .login-btn{
-      background: var(--xiaofan-bg-main-color);
+      background: v-bind(ThemeMainBgColorVal);
       color: var(--xiaofan-bg-default-color-text);
     }
     .register-btn{
       background: none;
-      color: var(--xiaofan-bg-main-color);
-      border: 2px solid var(--xiaofan-bg-main-color);
+      color: v-bind(ThemeMainBgColorVal);
+      border: 2px solid v-bind(ThemeMainBgColorVal);
     }
 
     .user-agreement-div{
@@ -162,7 +164,7 @@ onShow(() => {
         color: var(--xiaofan-remind-color-text);
       }
       .title{
-        color: var(--xiaofan-bg-main-color-text);
+        color: v-bind(ThemeMainTextColorVal);
       }
     }
   }

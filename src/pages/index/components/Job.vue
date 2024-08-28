@@ -19,7 +19,7 @@
         <div class="topic-wrapper-title">
           <h3 class="topic-wrapper-title-text">话题</h3>
           <div class="topic-wrapper-title-more">全部
-            <uni-icons type="right" color="#979797de" size="16"></uni-icons>
+            <uni-icons type="right" :color="ThemeMainBgColorVal" size="16"></uni-icons>
           </div>
         </div>
 
@@ -37,7 +37,7 @@
       <div class="user-message" v-for="item,index in 3">
         <div class="user-message-info">
           <div class="user-message-info-avatar">
-            <img src="@/static/image/avatar.jpg" class="user-message-info-avatar-img">
+            <image src="@/static/image/avatar.jpg" class="user-message-info-avatar-img" />
           </div>
           <div class="user-message-info-title">
             <span class="user-message-info-title-text">小帆程序员</span>
@@ -77,6 +77,9 @@
 <script lang="ts" setup>
 
 import {ref} from "vue";
+import {userThemeColorValStore} from "@/stores";
+
+const userThemeColorVal = userThemeColorValStore()
 
 const TodayHotList = ref([
   {
@@ -104,7 +107,9 @@ const goTopicDetails = (id: string) => {
     animationDuration: 2000
   })
 }
-
+const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color'];
+const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
+const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];
 </script>
 
 <style lang="scss" scoped>
@@ -157,8 +162,8 @@ const goTopicDetails = (id: string) => {
           font-size: 1.2rem;
           padding-left: 4px;
           font-style: normal;
-          background: var(--xiaofan-bg-main-color);
-          color: var(--xiaofan-bg-default-color-text);
+          background: v-bind(ThemeMainBgColorVal);
+          color: #ffffff;
           transform: Skew(160deg);
 
         }
@@ -175,7 +180,7 @@ const goTopicDetails = (id: string) => {
       margin-top: 20px;
       border-radius: 25px;
       font-size: 1rem;
-      background: var(--xiaofan-bg-main-color);
+      background: v-bind(ThemeMainBgColorVal);
       color: #ffffff;
     }
 
@@ -226,7 +231,7 @@ const goTopicDetails = (id: string) => {
 
       .topic-wrapper-content-icon {
         font-size: 2rem;
-        color: var(--xiaofan-bg-main-color);
+        color: v-bind(ThemeMainBgColorVal);
       }
 
       .topic-wrapper-content-item-text-info {
@@ -310,8 +315,8 @@ const goTopicDetails = (id: string) => {
 
         .user-message-send-type-item {
           margin: 10px 0 0 10px;
-          background: var(--xiaofan-bg-unimportant-color);
-          color: var(--xiaofan-bg-main-color-text);
+          background: v-bind(ThemeUnimportantBgColorVal);
+          color: v-bind(ThemeMainBgColorVal);
           padding: 0 10px 0 10px;
           font-size: .8rem;
           border-radius: 25px;

@@ -1,6 +1,6 @@
 // @ts-ignore
-import { userLoginStatusStore,userMannerInfoStore } from '@/stores';
-const baseURL: string = 'http://localhost:9000'
+import { userMannerInfoStore } from '@/stores';
+const baseURL: string = 'http://192.168.101.5:9000'
 // 配置拦截器参数
 const httpInterceptor = {
   // 拦截前触发
@@ -18,8 +18,7 @@ const httpInterceptor = {
 
     }
     // 4.添加token
-    const userStore = userLoginStatusStore()
-    const token = userStore.token
+    const token = 'xiaofan666'
     if (token) {
       options.header.Authorization = token
     }
