@@ -1,74 +1,68 @@
 <template>
+  <FanHeader/>
   <div class="message-page">
-    <view class="classify-tab">
-      <!-- tabs -->
-      <view class="tabs">
-        <text
-            class="item"
-            v-for="(item, index) in orderTabs"
-            :key="item.title"
-            @tap="changePlate(index)"
-            :class="activeIndex === index ? 'tabs-select' : 'item'"
-        >
-          {{ item.title }}
-        </text>
-      </view>
-      <!-- 滑动容器 -->
-      <swiper
-          class="swiper"
-          :current="activeIndex"
-          @change="activeIndex = $event.detail.current"
-      >
-        <!-- 滑动项 -->
-        <swiper-item v-for="item,index in orderTabs" :key="item.title">
-          <scroll-view scroll-y class="home">
-            <component :is="item.component" v-if="index === activeIndex"></component>
-          </scroll-view>
-        </swiper-item>
-      </swiper>
-    </view>
+   <div class="message-page-classify-container">
+     <div class="message-page-classify">
+       <div class="message-page-classify-item">
+         <span class="iconfont" style="color: #45d7a6;">&#xe61a;</span>
+         <text class="message-page-classify-item-title">收到回复</text>
+       </div>
+       <div class="message-page-classify-item">
+         <span class="iconfont" :style="{'color': ThemeMainBgColorVal}">&#xe8c6;</span>
+         <text class="message-page-classify-item-title">收到喜欢</text>
+       </div>
+       <div class="message-page-classify-item">
+         <span class="iconfont" style="color: #3fc5f0;">&#xe634;</span>
+         <text class="message-page-classify-item-title">新增粉丝</text>
+       </div>
+     </div>
+   </div>
+    <scroll-view class="scroll-view" style="height: auto" scroll-y="true" scroll-with-animation="true">
+    <div class="message-list">
+      <div class="message-list-item" v-for="item,index in 10" @click="goToChatPage(index)">
+        <div class="user-avatar">
+          <image src="@/static/image/avatar.jpg" class="avatar-img"/>
+        </div>
+
+       <div class="message-user">
+         <div class="user-info">
+           <div class="user-info-name"><text class="name-text">王道计算机教育</text></div>
+           <div class="user-message"><text class="message-text">[自动回复]你好受打击啊是撒打算的</text></div>
+         </div>
+
+         <div class="user-send">
+           <div class="send-time">
+             <text class="time-text">08-28</text>
+             <div class="message-tx"></div>
+           </div>
+         </div>
+       </div>
+      </div>
+    </div>
+    </scroll-view>
   </div>
   <FanTabBar/>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import Chat from "@/pages/message/components/Chat.vue";
-import Notice from "@/pages/message/components/Notice.vue";
-import FanTabBar from "@/components/FanTabBar.vue";
-
 
 import {onLoad} from "@dcloudio/uni-app";
-import {userThemeColorValStore} from "@/stores";
 
-const userThemeColorVal = userThemeColorValStore()
+import {userThemeColorValStore} from "@/stores";
 
 // 获取屏幕边界到安全区域距离
 const {safeAreaInsets} = uni.getSystemInfoSync()
-import {userMannerInfoStore, chanePlateIndexStore} from "@/stores"
 
-
-const userInfoMannerStatusStore = userMannerInfoStore()
-const userChanePlateIndexStore = chanePlateIndexStore()
-// tabs 数据
-const orderTabs = ref([
-  {hometate: 0, title: '聊天', component: Chat},
-  {hometate: 1, title: '通知', component: Notice}
-])
-
-// 高亮下标
-const activeIndex = ref(0)
-
-const changePlate = (index: number) => {
-  activeIndex.value = index
-}
-
-const isShowSkeleton = ref(false)
-
+const userThemeColorVal = userThemeColorValStore()
 
 const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color'];
-const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
-const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];
+
+const goToChatPage = (uid:number) => {
+  uni.navigateTo({
+    url: `/pages/chat/index?id=${uid}`,
+  })
+}
 
 onLoad(async () => {
 
@@ -80,58 +74,96 @@ onLoad(async () => {
 .message-page {
   width: 100vw;
   height: 100vh;
-  background: #f5f6f8;
-  .classify-tab {
-    height: 100%;
+  .message-page-classify-container{
+    width: 100%;
+    height: 120px;
+    border-bottom: 1px solid #e7e7e7;
+    .message-page-classify{
+      display: flex;
+      width: 80%;
+      margin: 40px auto;
+      justify-content: space-between;
+      .message-page-classify-item{
+        display: flex;
+        flex-direction: column;
+        .iconfont{
+          display: inline-block;
+          padding: 10px;
+          background: #f7f9f8;
+          border-radius: 10px;
+          text-align: center;
+          font-size: 28px;
+        }
+        .message-page-classify-item-title{
+          padding-top: 5px;
+          color: #9e9e9e;
+        }
+      }
+
+    }
+  }
+
+  .message-list{
+    width: 95%;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    margin-top: 10px;
-  }
+    height: auto;
+    margin: 20px auto;
+    transform: translateY(-10px);
+    .message-list-item{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
 
-  // tabs
-  .tabs {
-    display: flex;
-    justify-content: space-around;
-    line-height: 60 rpx;
-    margin: 0 10 rpx;
-    background-color: #fff;
-    box-shadow: 0 4 rpx 6 rpx rgba(240, 240, 240, 0.6);
-    position: relative;
-    z-index: 9;
+      .user-avatar{
+        width: 50px;
+        height: 50px;
 
-    .item {
-      flex: 1;
-      text-align: center;
-      padding: 20 rpx;
-      font-size: 28 rpx;
-      color: #262626;
+        .avatar-img{
+          width: 100%;
+          height: 100%;
+          border-radius: 100%;
+        }
+      }
+
+      .message-user{
+        display: flex;
+        padding: 10px;
+        transform: translateY(-10px);
+        border-bottom: 1px solid #e7e7e7;
+        .name-text{
+          font-size: 20px;
+        }
+        .user-message{
+          padding-top: 5px;
+        }
+        .message-text{
+          color: #c5c3c3;
+          padding-top: 10px;
+
+        }
+        .time-text{
+          color: #cccccc;
+          font-size: 14px;
+        }
+
+        .user-send{
+          position: relative;
+        }
+
+        .message-tx{
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          border-radius: 100%;
+          background: #f85a55;
+          bottom: 20%;
+          right: 0;
+
+        }
+      }
     }
-
-    .cursor {
-      position: absolute;
-      left: 10%;
-      bottom: 0;
-      width: 12%;
-      height: 6 rpx;
-      padding: 0 50 rpx;
-      background-color: #ff0304;
-      /* 过渡效果 */
-      transition: all 0.4s;
-    }
   }
 
-  // swiper
-  .swiper {
-    height: 100vh;
-    background-color: #ffffff;
-    margin-top: 1rem;
-  }
-}
-
-.tabs-select {
-  color: v-bind(ThemeMainTextColorVal) !important;
-  font-weight: bold;
-  border-bottom: 3px solid v-bind(ThemeMainBgColorVal);
 }
 </style>

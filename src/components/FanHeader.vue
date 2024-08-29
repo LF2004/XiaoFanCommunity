@@ -1,13 +1,70 @@
 <template>
-
+  <div class="header-container" >
+    <div class="header-container-header" :style="{'margin-top': safeAreaInsets.top  + 'px'}">
+      <div class="header-container-header-item">
+        <div class="header-back">
+          <uni-icons @click="backOutToPage" type="left" style="font-weight: bold" color="#666666"
+                     size="24"></uni-icons>
+        </div>
+        <text class="header-title">{{title}}</text>
+      </div>
+      <div class="header-container-header-item">
+        <span class="iconfont" style="transform: translateX(-10px);color: #666666;" v-for="item,index in icon" :style="{'margin-left': index === 0 ? '0' : '20px','font-size': iconSize + 'px'}" v-html="item"></span>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
-  name: "FanHeader"
+<script setup lang="ts">
+// 获取屏幕边界到安全区域距离
+const {safeAreaInsets} = uni.getSystemInfoSync()
+
+defineProps({
+  title: {
+    type: String,
+    default: '消息'
+  },
+  icon:{
+    type: Array,
+    default: ['&#xe636;','&#xe613;']
+  },
+  iconSize:{
+    type: Number,
+    default: 18
+  },
+  goToUrl:{
+    type: Array,
+  }
+})
+
+const backOutToPage = () => {
+  uni.navigateBack()
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.header-container{
+  position: fixed;
+  top:0;
+  background: #ffffff;
+  height: auto;
+  border-bottom: 1px solid #e7e7e7;
+  width: 100%;
+  z-index: 999;
 
+  .header-container-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 5px;
+    .header-container-header-item{
+      display: flex;
+      align-items: center;
+    }
+
+    .header-title{
+      padding-left: 15px;
+    }
+  }
+}
 </style>

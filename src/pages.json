@@ -31,6 +31,12 @@
 			}
 		},
 		{
+			"path": "pages/chat/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/my/my",
 			"style": {
 				"navigationStyle": "custom"
