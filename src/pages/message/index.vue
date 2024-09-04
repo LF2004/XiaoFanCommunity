@@ -74,6 +74,7 @@ onLoad(async () => {
 .message-page {
   width: 100vw;
   height: 100vh;
+  margin-top: 80px;
   .message-page-classify-container{
     width: 100%;
     height: 120px;

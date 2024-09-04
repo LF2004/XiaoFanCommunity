@@ -15,7 +15,7 @@
   <FanPopup ref="popup" title="文章">
     <div class="tabBar-list-popup-warp">
       <div class="operate-list">
-        <div class="operate-list-item">
+        <div class="operate-list-item" @click="goToPubliish()">
           <span class="operate-list-item-icon iconfont" style="color: #ffffff;font-size: 24px" :style="{'background-color':userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color']  }">&#xe878;</span>
           <span class="operate-list-item-text">帖子</span>
         </div>
@@ -164,6 +164,12 @@ const tabBarList = ref([
     path: '/pages/my/my'
   }
 ]);
+
+const goToPubliish = () => {
+  uni.navigateTo({
+    url: '/pages/publish/index'
+  })
+}
 
 // ... 加载颜色值的逻辑保持不变
 const colorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color']

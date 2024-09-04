@@ -140,6 +140,7 @@ onLoad(async () => {
   .user-avarat {
     width: 28px;
     height: 28px;
+    border-radius: 100%;
   }
 
   .search-post {

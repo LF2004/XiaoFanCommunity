@@ -43,7 +43,25 @@
 			}
 		},
 		{
+			"path": "pages/other/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/postdetails/postdetails",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/publish/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preview/index",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -126,6 +144,13 @@
 				"style": {
 					"navigationStyle": "custom",
 					"navigationBarTitleText": "头像修改"
+				}
+			},
+			{
+				"path": "pendant",
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTitleText": "头像挂件"
 				}
 			}
 		],

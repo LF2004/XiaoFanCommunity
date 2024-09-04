@@ -21,14 +21,18 @@
         <div class="invitation-card-list-item" hover-class="none"
                    v-for="item,index in 3">
           <div class="user-info">
-            <image src="@/static/image/avatar.jpg" class="user-avarat" />
-            <div class="user-info-text">
-              <div class="user-name">小帆<span class="user-level">LV1</span></div>
-              <div class="user-desc-item">
-                <div class="user-desc-item-text">02-25</div>
-                <div class="user-desc-item-num">官方消息</div>
+            <navigator hover-class="none" :url="`/pages/other/index`">
+              <image src="@/static/image/avatar.jpg" class="user-avarat" />
+            </navigator>
+            <navigator hover-class="none" :url="`/pages/other/index`">
+              <div class="user-info-text">
+                <div class="user-name">小帆<span class="user-level">LV1</span></div>
+                <div class="user-desc-item">
+                  <div class="user-desc-item-text">02-25</div>
+                  <div class="user-desc-item-num">官方消息</div>
+                </div>
               </div>
-            </div>
+            </navigator>
             <span class="iconfont" style="font-size: 28px">&#xe623;</span>
           </div>
 
