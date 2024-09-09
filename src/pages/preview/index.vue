@@ -34,7 +34,7 @@
             </div>
           </div>
 
-          <div class="postdetails-main-content" v-html="postdetailsVal.content"></div>
+          <div class="postdetails-main-content" v-html="postdetailsVal.content ? postdetailsVal.content : postdetailsVal2.html "></div>
         </div>
       </scroll-view>
     </div>
@@ -79,6 +79,7 @@ const backInOuterHome = async () => {
 }
 
 const postdetailsVal = ref(uni.getStorageSync('preview-postdetails'))
+const postdetailsVal2 = ref(uni.getStorageSync('edit-content'))
 const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color'];
 const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
 const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];

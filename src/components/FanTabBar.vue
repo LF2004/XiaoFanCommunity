@@ -166,9 +166,17 @@ const tabBarList = ref([
 ]);
 
 const goToPubliish = () => {
-  uni.navigateTo({
-    url: '/pages/publish/index'
-  })
+  const equipmentInfo = uni.getSystemInfoSync().platform
+  if(equipmentInfo == 'android'){
+    uni.navigateTo({
+      url: '/pages/publish/test'
+    })
+  }else {
+    uni.navigateTo({
+      url: '/pages/publish/index'
+    })
+  }
+
 }
 
 // ... 加载颜色值的逻辑保持不变

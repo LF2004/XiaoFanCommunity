@@ -14,3 +14,4 @@ export * from './modules/userLoginManner';
 export * from './modules/AccentColor';
 export * from './modules/plate';
 export * from './modules/ThemeColor';
+export * from './modules/editor';

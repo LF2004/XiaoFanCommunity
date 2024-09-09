@@ -17,9 +17,9 @@
        </div>
      </div>
    </div>
-    <scroll-view class="scroll-view" style="height: auto" scroll-y="true" scroll-with-animation="true">
+    <scroll-view class="scroll-view" style="height: 600px" scroll-y="true" scroll-with-animation="true">
     <div class="message-list">
-      <div class="message-list-item" v-for="item,index in 10" @click="goToChatPage(index)">
+      <div class="message-list-item" v-for="item,index in 20" @click="goToChatPage(index)">
         <div class="user-avatar">
           <image src="@/static/image/avatar.jpg" class="avatar-img"/>
         </div>

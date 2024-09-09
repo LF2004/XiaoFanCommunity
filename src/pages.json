@@ -61,6 +61,12 @@
 			}
 		},
 		{
+			"path": "pages/publish/test",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/preview/index",
 			"style": {
 				"navigationStyle": "custom"
@@ -90,6 +96,12 @@
 		},
 		{
 			"path": "pages/alipayLogin/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/exchangeCentent/index",
 			"style": {
 				"navigationStyle": "custom"
 			}

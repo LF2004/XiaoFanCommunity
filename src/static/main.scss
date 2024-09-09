@@ -93,4 +93,34 @@ body {
   border-radius: 25px!important;
 }
 
+.tiptap .ProseMirror .ProseMirror-hideselection{
+  img{
+    width: 200px !important;
+    height: 200px !important;
+  }
+}
 
+.postdetails-main-content img{
+  width: 80%;
+  margin-left: 10%;
+}
+
+.ProseMirror-hideselection img{
+  width: 80%;
+  margin-left: 10%;
+}
+
+.ql-blank{
+  font-style: normal !important;
+  color: #1f1f1f;
+}
+.ql-editor.ql-blank::before {
+  font-style: normal !important;
+}
+
+.editor-img{
+  width: 80% !important;
+  margin-left: 15%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

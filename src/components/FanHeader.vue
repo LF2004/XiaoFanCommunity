@@ -9,7 +9,11 @@
         <text class="header-title">{{title}}</text>
       </div>
       <div class="header-container-header-item">
-        <span class="iconfont" style="transform: translateX(-10px);color: #666666;" v-for="item,index in icon" :style="{'margin-left': index === 0 ? '0' : '20px','font-size': iconSize + 'px'}" v-html="item"></span>
+        <span class="iconfont" style="transform: translateX(-10px);"
+              v-for="item,index in icon"
+              :style="{'margin-left': index === 0 ? '0' : '20px','font-size': iconSize + 'px','color':iconColor }"
+              @click="goToOtherPage(index)"
+              v-html="item"></span>
       </div>
     </div>
   </div>
@@ -32,6 +36,10 @@ defineProps({
     type: Number,
     default: 18
   },
+  iconColor:{
+    type:String,
+    default:'#666666'
+  },
   goToUrl:{
     type: Array,
   }
@@ -39,6 +47,12 @@ defineProps({
 
 const backOutToPage = () => {
   uni.navigateBack()
+}
+
+const goToOtherPage = () => {
+  uni.navigateTo({
+    url:``
+  })
 }
 </script>
 

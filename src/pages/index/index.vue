@@ -76,7 +76,6 @@ onLoad(async () => {
 <template>
   <IndexSkeleton v-if="isShowSkeleton"/>
   <div class="warrper" :style="{'margin-top': safeAreaInsets.top + 'px'}">
-	  <button @click="addBenDiTotaos">创建本地通知</button>
     <div class="index-header" >
       <navigator url="/pages/login/login">
         <div class="index-header-my-avatar">
@@ -92,7 +91,10 @@ onLoad(async () => {
       </navigator>
       <navigator url="/pages/message/index" class="message-post">
       <div class="index-header-my-avatar">
-        <span class="iconfont" style="color:#000;font-size: 24px;margin-left: -2px">&#xe61c;</span>
+        <uni-badge :text="3" absolute="rightTop">
+          <span class="iconfont" style="color:#000;font-size: 24px;margin-left: -2px">&#xe61c;</span>
+        </uni-badge>
+
       </div>
       </navigator>
     </div>

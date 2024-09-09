@@ -22,13 +22,15 @@
         <text class="word-count">{{ EditFormParams.title.length }}/30</text>
       </div>
       <div class="publish-container-edit-body">
-        <textarea placeholder="请尽情发挥把..." :maxlength="EditFormParams.wordCountSize" :cursor-color="EditFormParams.SeleteTextColorVal" class="publish-container-edit-body-inp"
-                  v-model="EditFormParams.content"
-                  @input="ChangeTextColor"
-        ></textarea>
+<!--        <textarea placeholder="请尽情发挥把..." :maxlength="EditFormParams.wordCountSize" :cursor-color="EditFormParams.SeleteTextColorVal" class="publish-container-edit-body-inp"-->
+<!--                  v-model="EditFormParams.content"-->
+<!--                  @input="ChangeTextColor"-->
+<!--        ></textarea>-->
+        <text class="uni-input-placeholder ts-text" v-if="isShowPlaceholder">请尽情发挥把...</text>
+        <editor-content :editor="state.editor" class="publish-container-edit-body-inp"/>
        <div class="preview-btn">
-         <button class="preview" :disabled="EditFormParams.content.length === 0 || EditFormParams.title.length === 0" @click="preview">预览</button>
-         <text class="word-count">{{ delCleanString(EditFormParams.content) }}/{{ EditFormParams.wordCountSize }}</text>
+         <button class="preview" :disabled="EditFormParams.InputTextValLength === 0 || EditFormParams.title.length === 0" @click="preview">预览</button>
+         <text class="word-count">{{ EditFormParams.InputTextValLength }}/{{ EditFormParams.wordCountSize }}</text>
        </div>
       </div>
     </div>
@@ -105,8 +107,14 @@
 </template>
 
 <script setup lang="ts">
-// 获取屏幕边界到安全区域距离
+
 import {onMounted, reactive, ref, watch} from "vue";
+
+import {Editor, EditorContent} from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+import Color from "@tiptap/extension-color";
+import TextStyle from "@tiptap/extension-text-style";
+import Image from "@tiptap/extension-image";
 
 import {userThemeColorValStore} from "@/stores";
 
@@ -118,17 +126,17 @@ import type FanPopup from "@/components/FanPopup.vue";
 
 const popup = ref<InstanceType<typeof FanPopup>>()
 
-
+// 获取屏幕边界到安全区域距离
 const {safeAreaInsets} = uni.getSystemInfoSync()
 
 const userThemeColorVal = userThemeColorValStore()
 
 const EditFormParams = reactive({
   title: '',
-  content: '<h3>【资源名称】：小米10星光官方改包ROM MIUI 12.0.1.0.QJKCNXM 资源分享</h3>\n<image style="width: 100%;height: 300px;margin-top: 20px" src="https://tse4-mm.cn.bing.net/th/id/OIP-C.qdjInXk8yLx80vZ1jKV4LwAAAA?rs=1&pid=ImgDetMain" />\n<p>【资源名称】：小米10星光官方改包ROM MIUI 12.0.1.0.QJKCNXM 资源分享</p>\n<b>【资源名称】：小米10星光官方改包ROM MIUI 12.0.1.0.QJKCNXM 资源分享</b>\n<sub>【资源名称】：小米10星光官方改包ROM MIUI 12.0.1.0.QJKCNXM 资源分享</sub><em style="color: #0f7fec">【资源名称】：小米10星光官方改包ROM MIUI 12.0.1.0.QJKCNXM 资源分享</em>',
   ShowContent: '',
   wordCountSize: 5000,
   SearchUserName: '',
+  InputTextValLength: 0,
   SelectTextColor: ['#000000','#06c431','#33f6b4','#ef0682','#ef2424','#ef2497'],
   SeleteTextColorVal: '#000000',
 })
@@ -150,7 +158,7 @@ const back = () => {
 const preview = () => {
   uni.setStorageSync('preview-postdetails', {
     title: EditFormParams.title,
-    content: EditFormParams.content,
+    content: state.editor.getHTML(),
     selectTabName: '原神纳塔',
   })
   uni.navigateTo({
@@ -180,6 +188,44 @@ const PreviewAtRef = ref<InstanceType<typeof FanPopup>>()
 
 const FontColorSelectRef = ref<InstanceType<typeof FanPopup>>()
 
+// 编辑器配置
+const state = reactive({
+  editor: new Editor({
+    content: "",
+    extensions: [
+      StarterKit,
+      TextStyle,
+      Image,
+      Color.configure({
+        types: ["textStyle"],
+      }),
+    ],
+    autofocus: true,
+    editable: true,
+    injectCSS: false,
+  }),
+  result: "",
+});
+
+const isShowPlaceholder = ref(true);
+
+//设置颜色
+const onColor = ($event: any) => {
+  // debugger;
+  console.log($event.detail)
+  state.editor.chain().focus().setColor($event.detail.value).run();
+};
+
+// 监听内容变化
+state.editor.on('transaction', (transaction) => {
+  EditFormParams.InputTextValLength = state.editor.getText().length;
+  if(state.editor.getText().length !== 0) {
+    isShowPlaceholder.value = false
+  }else {
+    isShowPlaceholder.value = true
+  }
+});
+
 const PreviewAt = () => {
   PreviewAtRef.value.open()
 }
@@ -190,7 +236,8 @@ const PreviewFontColorSelect = () => {
 
 
 const SelectAtUser = (user: any) =>{
-  EditFormParams.content = EditFormParams.content + `<span style="color: #0f7fec">@${user.name}</span>`
+  const textToInsert = `<span style="color: #0f7fec">@${user.name}</span>`;
+  state.editor.chain().insertContent(textToInsert).run();
   PreviewAtRef.value.close()
 }
 
@@ -207,10 +254,21 @@ const UploadImg = () => {
     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
     sourceType: ['album'], //从相册选择
     success: function (res) {
-     let imgList = res.tempFilePaths;
+      let imgList = res.tempFilePaths;
       console.log(res.tempFiles)
       for(let i = 0; i < imgList.length; i++) {
-        EditFormParams.content += `<image style="width: 100%;height: 300px;margin-top: 20px" src="${imgList[i]}" />`
+        // 使用insertContentAt方法插入图片
+        state.editor.chain()
+            .focus() // 确保编辑器获得焦点
+            .insertContentAt(state.editor.state.selection.from, {
+              type: 'image',
+              attrs: {
+                src: imgList[i],
+                class:'tes',
+                alt: '示例图片'
+              }
+            })
+            .run();
       }
     }
   });
@@ -218,13 +276,11 @@ const UploadImg = () => {
 
 
 
+
+
 const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color'];
 const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
 const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];
-
-onMounted(() => {
-
-})
 
 
 </script>
@@ -365,7 +421,8 @@ onMounted(() => {
       .publish-container-edit-body-inp {
         position: relative;
         width: 100%;
-        height: 500px;
+        height: auto;
+        min-height: 500px;
       }
 
       .word-count {

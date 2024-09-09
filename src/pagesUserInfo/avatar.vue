@@ -7,7 +7,9 @@
       </div>
     </div>
     <div class="user-cz">
+      <navigator url="/pagesUserInfo/pendant">
       <button class="cz-btn">更换头像挂件</button>
+      </navigator>
       <button class="cz-btn">修改头像</button>
     </div>
   </div>
