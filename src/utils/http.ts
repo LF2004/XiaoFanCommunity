@@ -1,6 +1,6 @@
 // @ts-ignore
 import { userMannerInfoStore } from '@/stores';
-const baseURL: string = 'http://192.168.101.5:9000'
+const baseURL: string = 'http://192.168.31.219:9000'
 // 配置拦截器参数
 const httpInterceptor = {
   // 拦截前触发

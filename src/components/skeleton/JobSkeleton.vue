@@ -1,232 +1,77 @@
 <template>
-  <JobSkeleton v-if="isShowSkeleton"/>
-  <div class="Job-wrapper" v-else>
+  <div class="Job-wrapper ">
     <scroll-view class="scroll-view" style="height: 140%" scroll-y="true" scroll-with-animation="true">
-      <div class="Today-search">
-        <div class="Today-search-wapper">
-          <div class="Today-search-title">今日热<span class="Today-search-title-span">榜</span></div>
+      <div class="Today-search open-skeleton">
+        <div class="Today-search-wapper ">
+          <div class="Today-search-title open-skeleton"></div>
           <div class="Today-search-list">
-            <div class="Today-search-list-item" v-for="item,index in TodayHotList"><span
-                class="Today-search-list-item-heat">{{ index + 1 }}</span>{{ item.title }}
+            <div class="Today-search-list-item open-skeleton" v-for="item,index in 3"><span
+                class="Today-search-list-item-heat open-skeleton"></span>
             </div>
-            <button class="Today-search-list-item-more" @click="ViewMore">查看更多
-              <uni-icons type="right" color="#ffffff" size="18"></uni-icons>
-            </button>
+            <button class="Today-search-list-item-more open-skeleton"></button>
           </div>
         </div>
       </div>
 
       <div class="topic-wrapper">
         <div class="topic-wrapper-title">
-          <h3 class="topic-wrapper-title-text">话题</h3>
-          <div class="topic-wrapper-title-more">全部
-            <uni-icons type="right" :color="ThemeMainBgColorVal" size="16"></uni-icons>
-          </div>
         </div>
 
         <div class="topic-wrapper-content">
-          <div class="topic-wrapper-content-item" v-for="item,index in 2" @click="goTopicDetails(index)">
-            <span class="topic-wrapper-content-icon iconfont">&#xe8b1;</span>
+          <div class="topic-wrapper-content-item open-skeleton" v-for="item,index in 2">
             <div class="topic-wrapper-content-item-text-info">
-              <span class="topic-wrapper-content-item-text-info-title">这届上班族为什么睡不着</span>
-              <span class="topic-wrapper-content-item-text-info-dep">3月21日是世界睡眠日，中国社会科学院研究所发...</span>
+              <span class="topic-wrapper-content-item-text-info-title"></span>
+              <span class="topic-wrapper-content-item-text-info-dep"></span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="user-message" v-for="item,index in 3">
-        <div class="user-message-info">
-          <div class="user-message-info-avatar">
-            <image src="@/static/image/avatar.jpg" class="user-message-info-avatar-img" />
-          </div>
-          <div class="user-message-info-title">
-            <span class="user-message-info-title-text">小帆程序员</span>
-            <span class="user-message-info-title-occupation">程序员</span>
-          </div>
-          <div class="user-message-operate"><span class="user-message-operate-icon iconfont">&#xe670;</span></div>
+      <div class="user-message " v-for="item,index in 3">
+        <div class="user-message-info open-skeleton">
+
         </div>
-        <div class="user-message-send">
-          <div class="user-message-send-message">互联网大厂都在裁员，美团是不是也快了，工资拖了两个月没发了。。。</div>
-          <div class="user-message-send-type">
-            <div class="user-message-send-type-item"><span class="topic-wrapper-content-icon iconfont">&#xe8b1;</span>互联网裁员浪潮
-            </div>
-            <div class="user-message-send-type-item"><span class="topic-wrapper-content-icon iconfont">&#xe8b1;</span>互联网裁员浪潮
-            </div>
-          </div>
+        <div class="user-message-send open-skeleton">
+
         </div>
 
-        <div class="user-operate">
+        <div class="user-operate open-skeleton">
           <div class="user-operate-item">
-            <span class="user-operate-item-icon iconfont">&#xe601;</span>
-            <span class="user-operate-item-text"></span>
-          </div>
-          <div class="user-operate-item" @click="OpenAllComments">
-            <span class="user-operate-item-icon iconfont">&#xe891;</span>
-            <span class="user-operate-item-text">12</span>
+
           </div>
           <div class="user-operate-item">
-            <span class="user-operate-item-icon iconfont">&#xe62a;</span>
-            <span class="user-operate-item-text">56</span>
+
+          </div>
+          <div class="user-operate-item">
+
           </div>
         </div>
       </div>
     </scroll-view>
   </div>
-
-  <FanPopup ref="CommentsPopup" :title="'全部回复'">
-    <scroll-view scroll-y="true" scroll-with-animation="true">
-      <div class="commnets-popup-list">
-        <div class="comments-main">
-          <div class="comments-main-avatar">
-            <image src="@/static/image/avatar.jpg" class="comments-main-avatar-img"/>
-            <image src="@/static/image/pendant/pendant4.png" class="comments-main-avatar-pendant"/>
-            <div class="user-level-info">
-              <text class="user-level-info-text">LV.1</text>
-            </div>
-          </div>
-          <div class="comments-main-content">
-            <div class="comments-main-content-name">
-              <text class="main-name">我是神里凌华的狗</text>
-              <image src="@/static/image/bubble/bubble3.png" class="bubble-img"/>
-            </div>
-            <div class="comments-main-content-text">
-              我才四百多，你比我还狠我是为了雷电将军，还有十天就可以了!你还早呢我才四百多，你比我还狠我是为了雷电将军，还有十天就可以了!你还早呢
-            </div>
-            <div class="send-tiem">
-              <div>
-                <text class="send-time-text">15分钟前 - 湖南</text>
-                <text class="reply-btn">回复</text>
-              </div>
-
-              <div class="like">
-                <span class="iconfont">&#xe62a;</span>
-                <text>1</text>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="commnets-popup-list-item" v-for="item,index in 10">
-          <div class="user-avatar">
-            <image src="@/static/image/my_avatar.jpg" class="user-avarat-img"/>
-            <image src="@/static/image/pendant/pendant4.png" class="user-pendant-img"/>
-            <div class="user-level-info">
-              <text class="user-level-info-text">LV.1</text>
-            </div>
-          </div>
-          <div class="comments-user-list-info-item-content">
-            <div class="user-name">
-              <text class="name-text">我是神里凌华的狗</text>
-              <image src="@/static/image/bubble/bubble3.png" class="bubble-img"/>
-            </div>
-            <div class="user-send-content">
-              我才四百多，你比我还狠我是为了雷电将军，还有十天就可以了!你还早呢我才四百多，你比我还狠我是为了雷电将军，还有十天就可以了!你还早呢
-            </div>
-
-            <div class="send-tiem">
-              <div>
-                <text class="send-time-text">15分钟前 - 湖南</text>
-                <text class="reply-btn">回复</text>
-              </div>
-
-              <div class="like">
-                <span class="iconfont">&#xe62a;</span>
-                <text>1</text>
-              </div>
-            </div>
-
-            <div class="comments-user-list-info-item-reply">
-              <div class="reply-user-info">
-                <div class="reply-user-name">
-                  <text class="reply-user-name-text">我是神里凌华的狗:</text>
-                  <text class="reply-user-content">测试回复的内容</text>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </scroll-view>
-  </FanPopup>
 </template>
 
 <script lang="ts" setup>
-import JobSkeleton from "@/components/skeleton/JobSkeleton.vue";
-import {ref} from "vue";
-import {userThemeColorValStore} from "@/stores";
-import type FanPopup from "@/components/FanPopup.vue";
-import {onLoad} from "@dcloudio/uni-app";
 
-const userThemeColorVal = userThemeColorValStore()
+import {onMounted, ref} from "vue";
 
-const CommentsPopup = ref<InstanceType<typeof FanPopup>>()
-
-const OpenAllComments = () => {
-  CommentsPopup.value?.open()
-}
-
-const TodayHotList = ref([
-  {
-    id: 1,
-    title: '**中兴，要求2年经验，必须加班'
-  },
-  {
-    id: 2,
-    title: '腾讯校招三年，已润，知无不言'
-  },
-  {
-    id: 3,
-    title: '华为od与浙江大华，选哪个，感觉都是坑'
-  }
-])
-
-const ViewMore = () => {
-  TodayHotList.value.push(TodayHotList.value[0])
-}
-
-const goTopicDetails = (id: string) => {
-  uni.navigateTo({
-    url: '/pages/postdetails/topicdetails?id=' + id,
-    animationType:'pop-in',
-    animationDuration: 2000
-  })
-}
-
-const isShowSkeleton = ref(false)
-
-
-onLoad(async () => {
-  isShowSkeleton.value = true
-  await Promise.all([
-    // getHomeBannerData(),
-    // getHomeCategoryMutliData(),
-    // getHomeHotMutil(),
-  ]).then(() => {
-    setTimeout(() => {
-      isShowSkeleton.value = false
-    }, 2000)
-  })
-})
-
-const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color'];
-const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
-const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];
 </script>
 
 <style lang="scss" scoped>
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%
+  }
 
-.Today-search-list-item:nth-child(1) .Today-search-list-item-heat {
-  background: #ff0000 !important;
+  100% {
+    background-position: 0 50%
+  }
 }
-
-.Today-search-list-item:nth-child(2) .Today-search-list-item-heat {
-  background: #ff8921 !important;
+.open-skeleton {
+  transition: all .2s ease-in-out;
+  animation: skeleton-loading 1.4s linear infinite;
+  background-size: 400% 100% !important;
 }
-
-.Today-search-list-item:nth-child(3) .Today-search-list-item-heat {
-  background: #ffc266 !important;
-}
-
 .Job-wrapper {
   position: relative;
   width: 100vw;
@@ -246,11 +91,10 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
       margin: 20px auto;
 
       .Today-search-title {
-        position: relative;
-        color: #041833;
-        font-size: 1.5rem;
-        font-style: italic;
+        width: 100%;
+        height: 40px;
         margin-bottom: 10px;
+        background: var(--xiaofan-skeleton-bg);
 
         .Today-search-title-span {
           width: 30px;
@@ -272,16 +116,20 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
     }
 
     .Today-search-list-item {
+      width: 91%;
+      height: 30px;
       margin-left: 30px;
       margin-top: 10px;
+      background: var(--xiaofan-skeleton-bg);
     }
 
     .Today-search-list-item-more {
       width: 40%;
+      height: 40px;
       margin-top: 20px;
       border-radius: 25px;
       font-size: 1rem;
-      background: v-bind(ThemeMainBgColorVal);
+      background: var(--xiaofan-skeleton-bg);
       color: #ffffff;
     }
 
@@ -291,7 +139,7 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
       width: 20px;
       height: 20px;
       margin-left: -30px;
-      background: #dddddd;
+      background: var(--xiaofan-skeleton-bg);
       color: #ffffff;
       padding: -1px;
       border-radius: 0 0 5px 5px;
@@ -314,6 +162,7 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
       margin: 0 auto;
       transform: translateY(20px);
       justify-content: space-between;
+      background: var(--xiaofan-skeleton-bg);
 
       .topic-wrapper-title-text {
         color: #041833;
@@ -327,8 +176,10 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
     .topic-wrapper-content-item {
       display: flex;
       width: 90%;
+      height: 70px !important;
       margin: 20px auto;
       height: auto;
+      background: var(--xiaofan-skeleton-bg);
 
       .topic-wrapper-content-icon {
         font-size: 2rem;
@@ -361,13 +212,16 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
     padding: 5px;
     margin-top: 20px;
 
+
     .user-message-info {
       position: relative;
       width: 90%;
+      height: 60px;
       margin: 0 auto;
       margin-bottom: 20px;
       transform: translateY(10px);
       display: flex;
+      background: var(--xiaofan-skeleton-bg);
 
       .user-message-info-avatar {
         width: 50px;
@@ -387,10 +241,12 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
 
         .user-message-info-title-text {
           font-size: 1.1rem;
+
         }
 
         .user-message-info-title-occupation {
           color: var(--xiaofan-remind-color-text);
+
         }
       }
 
@@ -406,7 +262,9 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
 
     .user-message-send {
       width: 90%;
+      height: 100px;
       margin: 10px auto;
+      background: var(--xiaofan-skeleton-bg);
 
       .user-message-send-type {
         display: flex;
@@ -426,11 +284,13 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
     }
 
     .user-operate {
-      width: 80%;
+      width: 90%;
+      height: 40px;
       margin: 20px auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: var(--xiaofan-skeleton-bg);
 
       .user-operate-item {
         font-size: 18px;

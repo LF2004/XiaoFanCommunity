@@ -12,6 +12,9 @@
       </uni-card>
     </uni-section>
 
+    <video id="myVideo" src="https://xiaofanya.oss-cn-beijing.aliyuncs.com/learn3.mp4"
+           @error="videoErrorCallback" :danmu-list="danmuList" enable-danmu danmu-btn controls></video>
+
     <button @click="saveUserToken()">保存登录信息</button>
 
     <navigator url="/pages/login/login" hover-class="none">
@@ -89,9 +92,24 @@ const getLocation = () => {
       });
     }
   });
-
-
 }
+
+const  danmuList = ref([{
+  text: '第 1s 出现的弹幕',
+  color: '#ff0000',
+  time: 1
+},
+  {
+    text: '第 3s 出现的弹幕',
+    color: '#ff00ff',
+    time: 3
+  },
+  {
+    text: '第 10s 出现的弹幕',
+    color: '#ff00ff',
+    time: 10
+  }
+])
 </script>
 
 <style>

@@ -105,6 +105,18 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/exchangeCentent/detail",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/exchangeCentent/recording",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {
@@ -156,6 +168,30 @@
 				"style": {
 					"navigationStyle": "custom",
 					"navigationBarTitleText": "头像修改"
+				}
+			},
+			{
+				"path": "edit",
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white",
+					"navigationBarTitleText": "修改信息"
+				}
+			},
+			{
+				"path": "editsave",
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white",
+					"navigationBarTitleText": "保存信息"
+				}
+			},
+			{
+				"path": "personalitylabel",
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white",
+					"navigationBarTitleText": "个性标签"
 				}
 			},
 			{

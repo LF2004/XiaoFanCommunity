@@ -9,8 +9,7 @@
                        size="24"></uni-icons>
           </div>
           <div class="header-right">
-            <span class="iconfont header-icon">&#xe602;</span>
-            <span class="iconfont header-icon" @click="openPopup">&#xe790;</span>
+            <span class="iconfont header-icon" @click="openPopup">&#xe613;</span>
           </div>
         </div>
         <div class="my-header-content" v-if="isShowMyAvatar">
@@ -95,60 +94,31 @@
         </view>
       </div>
     </div>
-
-
   </scroll-view>
 
 
+  <div class="operate-box">
+    <div class="operate-box-div">
+      <div class="operate-box-btn" :class="!isConcernStatus ? 'operate-box-btn-select' : 'operate-box-btn' "  @click="ChangeOperate(1)">聊天</div>
+      <div class=" operate-box-btn operate-box-btn-select" :class="!isConcernStatus ? 'operate-box-btn-select-gz' : 'operate-box-btn'" @click="ChangeOperate(2)">{{ !isConcernStatus ? '已关注' : '+ 关注' }}</div>
+    </div>
+  </div>
 
 
-  <FanPopup ref="popup"  backgroundColor="#eff3f6" :is-show-close-btn="false" position="right" :radius="false">
-    <div class="menu-popup-list">
-      <div class="menu-popup-item">
-        <span class="iconfont">&#xe612;</span>
-        <h4>我的收藏</h4>
-      </div>
-      <div class="menu-popup-item">
-        <span class="iconfont">&#xe621;</span>
-        <h4>历史记录</h4>
-      </div>
-      <navigator url="/pagesUserInfo/color">
-        <div class="menu-popup-item">
-          <span class="iconfont">&#xeaec;</span>
-          <h4>主题修改</h4>
-        </div>
-      </navigator>
-      <div class="menu-popup-item">
-        <span class="iconfont">&#xe655;</span>
-        <h4>个性装扮</h4>
-      </div>
-    </div>
-    <div class="menu-popup-list">
-      <div class="menu-popup-item">
-        <span class="iconfont">&#xe610;</span>
-        <h4>小帆币</h4>
-      </div>
-      <div class="menu-popup-item">
-        <span class="iconfont">&#xe60d;</span>
-        <h4>兑换中心</h4>
-      </div>
-    </div>
 
-    <div class="my-setting">
-      <div class="my-setting-item">
-        <span class="iconfont">&#xe602;</span>
-        <h4>设置</h4>
+  <FanPopup ref="popup" title="管理" :is-show-close-btn="false">
+    <div class="popup-warp">
+      <div class="popup-warp-item">
+        <span class="iconfont">&#xe724;</span>
+        <text class="popup-warp-item-text">拉黑</text>
       </div>
-      <div class="my-setting-item">
-        <span class="iconfont">&#xe62f;</span>
-        <h4>联系客服</h4>
+      <div class="popup-warp-item">
+        <span class="iconfont">&#xe624;</span>
+        <text class="popup-warp-item-text">举报</text>
       </div>
     </div>
+    <div class="popup-warp-btn" @click="popup.close()">取消</div>
   </FanPopup>
-
-
-
-  <FanTabBar/>
 </template>
 
 <script lang="ts" setup>
@@ -179,6 +149,36 @@ const limitMaxName = (name: string) => {
 
 const edit = () => {
   alert('编辑')
+}
+
+const isConcernStatus = ref(true)
+
+const ChangeOperate = (type:number) => {
+  if(type === 1){
+    uni.showModal({
+      title: '提示',
+      content: '确认要聊天吗?',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定');
+        } else if (res.cancel) {
+          console.log('用户点击取消');
+        }
+      }
+    });
+  } else if(isConcernStatus.value === false) {
+    uni.showModal({
+      title: '提示',
+      content: '确认要取消关注吗?',
+      success: function (res) {
+        if (res.confirm) {
+         isConcernStatus.value = true
+        }
+      }
+    });
+  }else {
+    isConcernStatus.value = false
+  }
 }
 
 const isAddHeaderSty = ref(false)
@@ -267,25 +267,45 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
   margin-top: 1rem;
 }
 
-
-.menu-popup-list{
-  display: flex;
-  width: 110%;
-  flex-direction: column;
-  background: #ffffff;
-  border-radius: 10px;
-  margin-top: 20px;
-  .menu-popup-item{
+.popup-warp{
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px 20px;
+  border-radius: 15px 15px 0 0;
+  .popup-warp-item{
     display: flex;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    flex-direction: column;
+
     .iconfont{
-      margin-left: 20px;
-      margin-right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      background: #f8f8f8;
+      text-align: center;
+      margin-bottom: 10px;
     }
+
+    .popup-warp-item-text{
+      padding-left: 5px;
+      color: #c5c3c3;
+    }
+
+  }
+  .popup-warp-btn{
+    width: 100%;
+    height: 40px;
+    background: #f8f8f8;
+    border: none !important;
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
   }
 }
+
 .my-setting{
   position: absolute;
   bottom: 0;
@@ -505,6 +525,42 @@ const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main
     }
   }
 
+}
+
+.operate-box{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #ffffff;
+  padding: 15px;
+  border-top: 1px solid #e7e7e7;
+  .operate-box-div{
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    .operate-box-btn{
+      width: 35%;
+      transition: .3s;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border-radius: 10px;
+      color: v-bind(ThemeMainTextColorVal);
+      border: 1px solid v-bind(ThemeMainBgColorVal);
+    }
+    .operate-box-btn-select{
+      width: 60% !important;
+      background: v-bind(ThemeMainBgColorVal);
+      color: #ffffff;
+    }
+    .operate-box-btn-select-gz{
+      width: 35% !important;
+      background: #f8f8f8;
+      color: #c5c3c3;
+      border: none !important;
+    }
+  }
 }
 
 </style>

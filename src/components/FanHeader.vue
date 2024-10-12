@@ -1,12 +1,12 @@
 <template>
-  <div class="header-container" >
+  <div class="header-container" :style="{'border-bottom': isShowBorder ? '1px solid #e7e7e7' : 'none'}">
     <div class="header-container-header" :style="{'margin-top': safeAreaInsets.top  + 'px'}">
       <div class="header-container-header-item">
         <div class="header-back">
           <uni-icons @click="backOutToPage" type="left" style="font-weight: bold" color="#666666"
                      size="24"></uni-icons>
         </div>
-        <text class="header-title">{{title}}</text>
+        <text class="header-title" :style="{'transform': `translateX(${isTitleCenter ? '150%' : '0'})`}">{{title}}</text>
       </div>
       <div class="header-container-header-item">
         <span class="iconfont" style="transform: translateX(-10px);"
@@ -30,11 +30,19 @@ defineProps({
   },
   icon:{
     type: Array,
-    default: ['&#xe636;','&#xe613;']
+    default: []
   },
   iconSize:{
     type: Number,
     default: 18
+  },
+  isShowBorder:{
+    type: Boolean,
+    default: true
+  },
+  isTitleCenter:{
+    type: Boolean,
+    default: false
   },
   iconColor:{
     type:String,
@@ -62,7 +70,7 @@ const goToOtherPage = () => {
   top:0;
   background: #ffffff;
   height: auto;
-  border-bottom: 1px solid #e7e7e7;
+  //border-bottom: 1px solid #e7e7e7;
   width: 100%;
   z-index: 999;
 

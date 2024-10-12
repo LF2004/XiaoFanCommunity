@@ -1,7 +1,7 @@
 <template>
-  <FanHeader/>
+  <FanHeader :icon="['&#xe636;','&#xe613;']"/>
   <div class="message-page">
-   <div class="message-page-classify-container">
+   <div class="message-page-classify-container" :style="{'margin-top': safeAreaInsets.top + 'px'}">
      <div class="message-page-classify">
        <div class="message-page-classify-item">
          <span class="iconfont" style="color: #45d7a6;">&#xe61a;</span>

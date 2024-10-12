@@ -117,7 +117,7 @@ const zfbLogin = () => {
   let storage_guid = uni.getStorageSync('guid')
   uni.request({
     method: 'POST',
-    url: 'http://192.168.101.4:9000/api/Alipay/saveToken',
+    url: 'http://192.168.31.219:9000/api/Alipay/saveToken',
     data: {
       aplipay_auth_code: storage_guid
     },
@@ -127,17 +127,39 @@ const zfbLogin = () => {
   })
 
 
-  let url = `https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2021003191605675&scope=auth_user&redirect_uri=http://192.168.101.5:5173/pages/alipayLogin/index?alipay_code=${storage_guid}&state=init`
-  let scheme = `alipays://platformapi/startapp?appId=20000067&url=${encodeURIComponent(url)}`
-  // 判断用户是否为电脑端
-  let platform = uni.getSystemInfoSync().platform;//获取平台判断
-  if (platform == 'android') {
-    plus.runtime.openURL(scheme)
-  } else if (platform == 'ios') {
-    plus.runtime.launchApplication({
-      action: scheme
-    })
-  }
+  // let url = `https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2021003191605675&scope=auth_user&redirect_uri=http://172.20.10.2:5173/pages/alipayLogin/index?alipay_code=${storage_guid}&state=init`
+  // let scheme = `alipays://platformapi/startapp?appId=20000067&url=${encodeURIComponent(url)}`
+  // // 判断用户是否为电脑端
+  // let platform = uni.getSystemInfoSync().platform;//获取平台判断
+  // if (platform == 'android') {
+  //   plus.runtime.openURL(scheme)
+  // } else if (platform == 'ios') {
+  //   plus.runtime.launchApplication({
+  //     action: scheme
+  //   })
+  // }
+
+  let backUrl = `http://192.168.31.219:5173/pages/alipayLogin/index?alipay_code=${storage_guid}`;
+  let aplipayAuthUrl = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm';//授权地址，可前端写死，也可后端返回
+  let appid = '2021003191605675'; //商户的APPID
+  let url = aplipayAuthUrl + '?app_id=' + appid + '&scope=auth_user&redirect_uri=' + backUrl
+  url=encodeURIComponent(url);
+
+  plus.runtime.openURL(
+      'alipays://platformapi/startapp?appId=20000067&url=' + url, //这里的appId=20000067是固定的，不需要改
+      res => {
+        //这里写打开URL地址失败后的处理
+        uni.showModal({
+          content: '本机未检测到对应客户端，是否打开浏览器访问页面？',
+          success: function (res) {
+            if (res.confirm) {
+              //plus.runtime.openURL();
+            }
+          }
+        });
+      },
+      'com.eg.android.AlipayGphone'
+  );
 
   getAlipayLoginState();
 }
@@ -157,11 +179,13 @@ const getAlipayLoginState = () => {
         icon: 'none',
         duration: 2000
       });
-      await userInfoMannerStatusStore.setUserInfoManner(res)
 
-      uni.redirectTo({
-        url: '/'
-      });
+      await userInfoMannerStatusStore.setUserInfoManner(res)
+      if(res.code === 200) {
+        uni.redirectTo({
+          url: '/pages/index/index',
+        })
+      }
     }
     if (res.code === 202) {
       uni.showToast({
@@ -192,6 +216,8 @@ const ThemeMainBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-c
 const ThemeUnimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
 const ThemeMainTextColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-main-color-text'];
 const unimportantBgColorVal = userThemeColorVal.themeColorVal['--xiaofan-bg-unimportant-color'];
+
+
 CheckboxBgColor.value = ThemeMainBgColorVal;
 
 onShow(() => {

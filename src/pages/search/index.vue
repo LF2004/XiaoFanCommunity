@@ -47,12 +47,12 @@ const back = () => {
       height: auto;
       margin: 0 auto;
       padding: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+
 
       .history-search-list-item {
-        height: 40px;
         background: #f8f8f8;
         padding: 10px;
         margin-top: 20px;

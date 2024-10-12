@@ -1,6 +1,6 @@
 <template>
   <FanHeader :title="uid" :icon="['&#xe602;']" :iconSize="30"/>
-  <div class="chat-container">
+  <div class="chat-container" :style="{'background-image': `url(${UserChatBg})`}">
     <div class="user-send-message" :class="item.uid === myUid ? 'user-send-my-message' : 'user-send-message' " v-for="item,itemIndex in UserMsgList">
       <div class="send-time">{{ item.sendTime }}</div>
       <div class="user-send-content">
@@ -43,6 +43,8 @@ const myUid = ref(2)
 
 
 const SendMsgVal = ref('')
+
+const UserChatBg = ref('https://ts1.cn.mm.bing.net/th/id/R-C.a462d7aff532c2744936e694cd3afca5?rik=CYccXiauu6hMjA&riu=http%3a%2f%2fn.sinaimg.cn%2fsinacn20112%2f133%2fw1200h2133%2f20190323%2fc61d-huqrnap3992176.jpg&ehk=M%2bxegSHF2cTRCi5WDeNMajM8hfBOd%2bjlIpboCcyC4RU%3d&risl=&pid=ImgRaw&r=0')
 
 const UserMsgList = ref([
   {
@@ -112,6 +114,9 @@ const sendMsg = () => {
   margin-top: 50px;
   padding-bottom: 80px;
   background: #f2f3f5;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment:fixed;
 
   .user-send-message {
     width: 100%;
@@ -119,7 +124,7 @@ const sendMsg = () => {
 
     .send-time {
       text-align: center;
-      color: #acadaf;
+      color: #828282;
       padding: 10px;
       font-size: 12px;
     }

@@ -1,54 +1,54 @@
 <template>
   <div style="margin-top: 30px">
-    <div class="index-header" :style="{'margin-top': safeAreaInsets.top + 'px'}">
-      <div class="index-header-my-avatar"></div>
-      <input type="text" class="search-post"/>
-      <div class="index-header-my-avatar">
+    <div class="index-header " :style="{'margin-top': safeAreaInsets.top + 'px'}">
+      <div class="index-header-my-avatar open-skeleton"></div>
+      <input type="text" class="search-post open-skeleton"/>
+      <div class="index-header-my-avatar open-skeleton">
       </div>
     </div>
-    <view class="classify-tab">
+    <view class="classify-tab ">
       <!-- tabs -->
-      <view class="tabs"></view>
+      <view class="tabs open-skeleton"></view>
       <!-- 滑动容器 -->
       <div class="swiper ">
         <!-- 滑动项 -->
         <swiper-item>
           <scroll-view scroll-y class="home">
             <div class="home-container">
-              <div class="home-swiper">
+              <div class="home-swiper open-skeleton">
               </div>
-              <div class="announcement"></div>
+              <div class="announcement open-skeleton"></div>
               <scroll-view class="scroll-view" style="height: 140%" scroll-y="true" scroll-with-animation="true">
                 <div class="invitation-card-list">
-                  <div class="invitation-card-list-item" hover-class="none"
+                  <div class="invitation-card-list-item " hover-class="none"
                        v-for="item,index in 5">
                     <div class="user-info">
-                      <div class="user-avarat"></div>
-                      <div class="user-info-text">
-                        <div class="user-name"><span class="user-level"></span></div>
-                        <div class="user-desc-item"></div>
+                      <div class="user-avarat open-skeleton"></div>
+                      <div class="user-info-text open-skeleton">
+                        <div class="user-name open-skeleton"><span class="user-level"></span></div>
+                        <div class="user-desc-item open-skeleton"></div>
                       </div>
 
                     </div>
 
-                    <div class="invitation-card-content">
-                      <div class="invitation-card-content-header">
-                        <div class="invitation-card-content-title"></div>
-                        <div class="invitation-card-content-tag"></div>
+                    <div class="invitation-card-content ">
+                      <div class="invitation-card-content-header ">
+                        <div class="invitation-card-content-title open-skeleton"></div>
+                        <div class="invitation-card-content-tag open-skeleton"></div>
                       </div>
 
-                      <div class="invitation-card-content-text"></div>
+                      <div class="invitation-card-content-text open-skeleton"></div>
 
                       <div class="Illustrated">
-                        <div class="Illustrated-img"></div>
-                        <div class="Illustrated-img"></div>
-                        <div class="Illustrated-img"></div>
+                        <div class="Illustrated-img open-skeleton"></div>
+                        <div class="Illustrated-img open-skeleton"></div>
+                        <div class="Illustrated-img open-skeleton"></div>
                       </div>
 
                       <div class="invitation-type">
-                        <div class="invitation-type-item"></div>
-                        <div class="invitation-type-item"></div>
-                        <div class="invitation-type-item"></div>
+                        <div class="invitation-type-item open-skeleton"></div>
+                        <div class="invitation-type-item open-skeleton"></div>
+                        <div class="invitation-type-item open-skeleton"></div>
                       </div>
                     </div>
                   </div>
@@ -70,41 +70,10 @@ import Job from "@/pages/index/components/Job.vue";
 import Information from "@/pages/index/components/Information.vue";
 // 获取屏幕边界到安全区域距离
 const {safeAreaInsets} = uni.getSystemInfoSync()
-
-
-// tabs 数据
-const orderTabs = ref([
-  {hometate: 0, title: '首页', component: Home},
-  {hometate: 1, title: '求职', component: Job},
-  {hometate: 2, title: '官方消息',component: Information},
-])
-
-// 高亮下标
 const activeIndex = ref(0)
-onMounted(() => {
-  const elements = document.body.getElementsByTagName('*');
-  for (let i = 0; i < elements.length; i++) {
-    elements[i].classList.add('open-skeleton');
-  }
-})
 </script>
 
 <style lang="scss" scoped>
-@keyframes skeleton-loading {
-  0% {
-    background-position: 100% 50%
-  }
-
-  100% {
-    background-position: 0 50%
-  }
-}
-.open-skeleton {
-  transition: all .2s ease-in-out;
-  animation: skeleton-loading 1.4s linear infinite;
-  background-size: 400% 100% !important;
-}
-
 .index-header {
   display: flex;
   justify-content: space-between;

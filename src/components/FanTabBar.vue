@@ -166,17 +166,9 @@ const tabBarList = ref([
 ]);
 
 const goToPubliish = () => {
-  const equipmentInfo = uni.getSystemInfoSync().platform
-  if(equipmentInfo == 'android'){
-    uni.navigateTo({
-      url: '/pages/publish/test'
-    })
-  }else {
-    uni.navigateTo({
-      url: '/pages/publish/index'
-    })
-  }
-
+  uni.navigateTo({
+    url: '/pages/publish/index'
+  })
 }
 
 // ... 加载颜色值的逻辑保持不变
@@ -244,6 +236,8 @@ onMounted(() => {
   height: auto;
   margin: 10px auto;
   .tabBar-list-WorkplacePopup-warp-plate{
+    width: 90%;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     .tabBar-list-WorkplacePopup-warp-plate-one-item{
@@ -278,8 +272,7 @@ onMounted(() => {
 
   .tabBar-list-WorkplacePopup-warp-plate-footer{
     width: 90%;
-    position: absolute;
-    bottom: 20px;
+    margin: 20px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;

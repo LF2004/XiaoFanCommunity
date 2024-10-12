@@ -24,7 +24,6 @@ body {
   width: 100vw;
   height: 100vh;
 
-  cursor: url('~@/static/Arrow.cur'), auto !important; // 注意这里的路径可能需要根据你的项目配置进行调整
 }
 
 /*定义滚动条高宽及背景
@@ -86,7 +85,21 @@ body {
 
 }
 
+// 骨架屏动画
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%
+  }
 
+  100% {
+    background-position: 0 50%
+  }
+}
+.open-skeleton {
+  transition: all .2s ease-in-out;
+  animation: skeleton-loading 1.4s linear infinite;
+  background-size: 400% 100% !important;
+}
 
 
 .uni-searchbar__box{
@@ -123,4 +136,8 @@ body {
   margin-left: 15%;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+ .input-value-border{
+  display: none !important;
 }
